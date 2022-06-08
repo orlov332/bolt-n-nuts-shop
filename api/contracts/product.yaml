@@ -10,7 +10,7 @@ paths:
     get:
       summary: Get all product list
       description: Get all product list
-      operationId: getProducts
+      operationId: getProductsList
       tags:
         - Products
       responses:

@@ -4,12 +4,12 @@ All URIs are relative to *http://https*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
-| [**getProducts**](ProductsApi.md#getProducts) | **GET** /products | Get all product list |
+| [**getProductsList**](ProductsApi.md#getProductsList) | **GET** /products | Get all product list |
 
 
-<a name="getProducts"></a>
-# **getProducts**
-> Product getProducts()
+<a name="getProductsList"></a>
+# **getProductsList**
+> Product getProductsList()
 
 Get all product list
 

@@ -7,7 +7,7 @@ All URIs are relative to *http://https*
 
 | Class | Method | HTTP request | Description |
 |------------ | ------------- | ------------- | -------------|
-| *ProductsApi* | [**getProducts**](Apis/ProductsApi.md#getproducts) | **GET** /products | Get all product list |
+| *ProductsApi* | [**getProductsList**](Apis/ProductsApi.md#getproductslist) | **GET** /products | Get all product list |
 
 
 <a name="documentation-for-models"></a>
