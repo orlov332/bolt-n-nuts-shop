@@ -1,0 +1,50 @@
+openapi: 3.0.3
+info:
+  title: Product catalog API
+  description: This is a simple 'Product catalog' service for e-shops
+  version: 1.0.0
+servers:
+  - url: 'https'
+paths:
+  /products:
+    get:
+      summary: Get all product list
+      description: Get all product list
+      operationId: getProducts
+      tags:
+        - Products
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+
+components:
+  schemas:
+    Product:
+      title: Product info
+      description: A product information for the store
+      type: object
+      properties:
+        id:
+          type: string
+          title: Id
+          description: Uniq id
+        title:
+          type: string
+          title: Title
+          description: Title of the product
+        description:
+          type: string
+          title: Description
+          description: Description of the product
+        price:
+          type: number
+          title: Price
+          description: Price of the product
+        count:
+          type: integer
+          title: Count
+          description: Amount of the product in store
