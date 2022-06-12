@@ -25,30 +25,30 @@ export interface Product {
      * @type {string}
      * @memberof Product
      */
-    'id'?: string;
+    'id': string;
     /**
      * Title of the product
      * @type {string}
      * @memberof Product
      */
-    'title'?: string;
+    'title': string;
     /**
      * Description of the product
      * @type {string}
      * @memberof Product
      */
-    'description'?: string;
+    'description': string;
     /**
      * Price of the product
      * @type {number}
      * @memberof Product
      */
-    'price'?: number;
+    'price': number;
     /**
      * Amount of the product in store
      * @type {number}
      * @memberof Product
      */
-    'count'?: number;
+    'count': number;
 }
 

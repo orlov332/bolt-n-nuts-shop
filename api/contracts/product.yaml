@@ -64,7 +64,7 @@ paths:
 components:
   schemas:
     Product:
-      title: Product info
+      title: Product
       description: A product information for the store
       type: object
       properties:
@@ -88,8 +88,15 @@ components:
           type: integer
           title: Count
           description: Amount of the product in store
+      required:
+        - id
+        - title
+        - description
+        - price
+        - count
 
     Products:
+      title: Product List
       type: array
       items:
         $ref: "#/components/schemas/Product"

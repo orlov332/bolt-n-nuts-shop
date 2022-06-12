@@ -9,9 +9,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Product } from "models/Product";
 import { formatAsPrice } from "utils/utils";
 import AddProductToCart from "components/AddProductToCart/AddProductToCart";
-// import axios from 'axios';
-// import API_PATHS from "constants/apiPaths";
-import productList from "./productList.json";
+import axios from 'axios';
+import API_PATHS from "constants/apiPaths";
+import { Configuration, ProductsApi } from 'bolt-n-nuts-api-client'
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -36,9 +36,9 @@ export default function Products() {
   const [products, setProducts] = useState<Product[]>([]);
 
   useEffect(() => {
-    // axios.get(`${API_PATHS.bff}/product/available/`)
-    //   .then(res => setProducts(res.data));
-    setProducts(productList);
+    const api = new ProductsApi(new Configuration({basePath: API_PATHS.product}));
+    api.getProductsList()
+      .then(response => setProducts(response.data));
   }, []);
 
   return (
@@ -60,7 +60,7 @@ export default function Products() {
               </Typography>
             </CardContent>
             <CardActions>
-              <AddProductToCart product={product} />
+              <AddProductToCart product={product}/>
             </CardActions>
           </Card>
         </Grid>
