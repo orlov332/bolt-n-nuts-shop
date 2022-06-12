@@ -7,12 +7,14 @@ All URIs are relative to *http://https*
 
 | Class | Method | HTTP request | Description |
 |------------ | ------------- | ------------- | -------------|
-| *ProductsApi* | [**getProductsList**](Apis/ProductsApi.md#getproductslist) | **GET** /products | Get all product list |
+| *ProductsApi* | [**getProductById**](Apis/ProductsApi.md#getproductbyid) | **GET** /products/{productId} | Get product by Id |
+*ProductsApi* | [**getProductsList**](Apis/ProductsApi.md#getproductslist) | **GET** /products | Get all product list |
 
 
 <a name="documentation-for-models"></a>
 ## Documentation for Models
 
+ - [Error](./Models/Error.md)
  - [Product](./Models/Product.md)
 
 

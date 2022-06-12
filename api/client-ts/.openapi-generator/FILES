@@ -10,5 +10,6 @@ index.ts
 package.json
 product/api/products-api.ts
 product/model/index.ts
+product/model/model-error.ts
 product/model/product.ts
 tsconfig.json

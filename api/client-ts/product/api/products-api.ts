@@ -29,6 +29,40 @@ import { Product } from '../../product/model';
 export const ProductsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
+         * Get product by Id
+         * @summary Get product by Id
+         * @param {string} productId The id of the product to retrieve
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getProductById: async (productId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'productId' is not null or undefined
+            assertParamExists('getProductById', 'productId', productId)
+            const localVarPath = `/products/{productId}`
+                .replace(`{${"productId"}}`, encodeURIComponent(String(productId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Get all product list
          * @summary Get all product list
          * @param {*} [options] Override http request option.
@@ -69,12 +103,23 @@ export const ProductsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = ProductsApiAxiosParamCreator(configuration)
     return {
         /**
+         * Get product by Id
+         * @summary Get product by Id
+         * @param {string} productId The id of the product to retrieve
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getProductById(productId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Product>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getProductById(productId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * Get all product list
          * @summary Get all product list
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getProductsList(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Product>> {
+        async getProductsList(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Product>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getProductsList(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -89,12 +134,22 @@ export const ProductsApiFactory = function (configuration?: Configuration, baseP
     const localVarFp = ProductsApiFp(configuration)
     return {
         /**
+         * Get product by Id
+         * @summary Get product by Id
+         * @param {string} productId The id of the product to retrieve
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getProductById(productId: string, options?: any): AxiosPromise<Product> {
+            return localVarFp.getProductById(productId, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Get all product list
          * @summary Get all product list
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getProductsList(options?: any): AxiosPromise<Product> {
+        getProductsList(options?: any): AxiosPromise<Array<Product>> {
             return localVarFp.getProductsList(options).then((request) => request(axios, basePath));
         },
     };
@@ -107,13 +162,23 @@ export const ProductsApiFactory = function (configuration?: Configuration, baseP
  */
 export interface ProductsApiInterface {
     /**
+     * Get product by Id
+     * @summary Get product by Id
+     * @param {string} productId The id of the product to retrieve
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ProductsApiInterface
+     */
+    getProductById(productId: string, options?: AxiosRequestConfig): AxiosPromise<Product>;
+
+    /**
      * Get all product list
      * @summary Get all product list
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ProductsApiInterface
      */
-    getProductsList(options?: AxiosRequestConfig): AxiosPromise<Product>;
+    getProductsList(options?: AxiosRequestConfig): AxiosPromise<Array<Product>>;
 
 }
 
@@ -124,6 +189,18 @@ export interface ProductsApiInterface {
  * @extends {BaseAPI}
  */
 export class ProductsApi extends BaseAPI implements ProductsApiInterface {
+    /**
+     * Get product by Id
+     * @summary Get product by Id
+     * @param {string} productId The id of the product to retrieve
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ProductsApi
+     */
+    public getProductById(productId: string, options?: AxiosRequestConfig) {
+        return ProductsApiFp(this.configuration).getProductById(productId, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * Get all product list
      * @summary Get all product list

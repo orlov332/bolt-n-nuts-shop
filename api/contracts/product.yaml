@@ -19,7 +19,47 @@ paths:
           content:
             application/json:
               schema:
+                $ref: '#/components/schemas/Products'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /products/{productId}:
+    get:
+      summary: Get product by Id
+      description: Get product by Id
+      operationId: getProductById
+      tags:
+        - Products
+      parameters:
+        - name: productId
+          in: path
+          required: true
+          description: The id of the product to retrieve
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/Product'
+        '404':
+          description: Product not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
 
 components:
   schemas:
@@ -48,3 +88,19 @@ components:
           type: integer
           title: Count
           description: Amount of the product in store
+
+    Products:
+      type: array
+      items:
+        $ref: "#/components/schemas/Product"
+
+    Error:
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
