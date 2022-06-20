@@ -43,6 +43,7 @@
         "react-scripts": "^5.0.1",
         "serverless-finch": "^4.0.0",
         "serverless-single-page-app-plugin": "file:./serverless-single-page-app-plugin",
+        "bolt-n-nuts-api-client": "file:../api/client-ts",
         "typescript": "~4.6.4",
         "yup": "^0.29.1"
     },

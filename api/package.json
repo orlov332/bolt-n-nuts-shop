@@ -1,0 +1,14 @@
+{
+  "name": "product-api-generator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "generate": "openapi-generator-cli generate"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@openapitools/openapi-generator-cli": "^2.5.1"
+  }
+}
