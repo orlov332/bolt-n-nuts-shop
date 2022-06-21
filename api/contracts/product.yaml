@@ -4,7 +4,7 @@ info:
   description: This is a simple 'Product catalog' service for e-shops
   version: 1.0.0
 servers:
-  - url: 'https'
+  - url: 'https://xmy3ijbcpj.execute-api.eu-west-1.amazonaws.com/dev'
 paths:
   /products:
     get:

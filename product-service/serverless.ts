@@ -18,6 +18,10 @@ const serverlessConfiguration: AWS = {
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
       NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000',
+      PG_DB_HOST: 'bolt-n-nuts-products.c6dtehq3bdda.eu-west-1.rds.amazonaws.com',
+      PG_DB_PORT: '5432',
+      PG_DB_USER: 'postgres',
+      PG_DB_PASSWORD: 'JnJ4UcTXYezH14MIF9i1',
     },
   },
   // import the function via paths
