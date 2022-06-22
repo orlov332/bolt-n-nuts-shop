@@ -3,12 +3,21 @@ import { formatJSONResponse } from '@libs/api-gateway';
 import { middyfy } from '@libs/lambda';
 
 import schema from './schema';
-// @ts-ignore
-import productList from '../../productList.json' assert { type: 'json' };
+import { getDbConnection } from '../../repository/db';
+import { ProductRepository } from '../../repository/ProductRepository';
 
 
 const getProductsList: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async () => {
-  return formatJSONResponse(productList);
+  let client;
+  try {
+    client = getDbConnection();
+    await client.connect();
+    const productRepository = new ProductRepository(client);
+    const products = await productRepository.getAll();
+    return formatJSONResponse(products);
+  } finally {
+    client && await client.end();
+  }
 };
 
 export const main = middyfy(getProductsList);

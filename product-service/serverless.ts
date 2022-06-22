@@ -6,7 +6,7 @@ import productById from '@functions/prodict-by-id';
 const serverlessConfiguration: AWS = {
   service: 'product-service',
   frameworkVersion: '3',
-  plugins: ['serverless-esbuild'],
+  plugins: [ 'serverless-esbuild' ],
   provider: {
     name: 'aws',
     region: 'eu-west-1',
@@ -18,10 +18,11 @@ const serverlessConfiguration: AWS = {
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
       NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000',
-      PG_DB_HOST: 'bolt-n-nuts-products.c6dtehq3bdda.eu-west-1.rds.amazonaws.com',
-      PG_DB_PORT: '5432',
-      PG_DB_USER: 'postgres',
-      PG_DB_PASSWORD: 'JnJ4UcTXYezH14MIF9i1',
+      POSTGRESQL_HOST: 'bolt-n-nuts-products.c6dtehq3bdda.eu-west-1.rds.amazonaws.com',
+      POSTGRESQL_PORT: '5432',
+      POSTGRESQL_USER: 'postgres',
+      POSTGRESQL_DB_NAME: 'bolt_n_nuts',
+      POSTGRESQL_PASSWORD: 'JnJ4UcTXYezH14MIF9i1',
     },
   },
   // import the function via paths
@@ -32,7 +33,7 @@ const serverlessConfiguration: AWS = {
       bundle: true,
       minify: false,
       sourcemap: true,
-      exclude: ['aws-sdk'],
+      exclude: [ 'aws-sdk', 'pg-native' ],
       target: 'node16',
       define: { 'require.resolve': undefined },
       platform: 'node',
