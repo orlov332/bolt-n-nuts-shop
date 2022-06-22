@@ -17,7 +17,7 @@ create table if not exists products
             primary key,
     title       text not null,
     description text,
-    price       decimal
+    price       int
 );
 
 create table if not exists stocks
