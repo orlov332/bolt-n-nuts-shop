@@ -26,6 +26,32 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+    post:
+      summary: Create new product
+      description: Create new product
+      operationId: addProduct
+      tags:
+        - Products
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Products'
+
+      responses:
+        '201':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Products'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
 
   /products/{productId}:
     get:
@@ -89,11 +115,7 @@ components:
           title: Count
           description: Amount of the product in store
       required:
-        - id
         - title
-        - description
-        - price
-        - count
 
     Products:
       title: Product List

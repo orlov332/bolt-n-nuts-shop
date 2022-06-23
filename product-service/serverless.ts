@@ -1,7 +1,8 @@
 import type { AWS } from '@serverless/typescript';
-
+import 'dotenv/config';
 import productList from '@functions/product-list';
 import productById from '@functions/prodict-by-id';
+import productAdd from '@functions/product-add';
 
 const serverlessConfiguration: AWS = {
   service: 'product-service',
@@ -18,15 +19,15 @@ const serverlessConfiguration: AWS = {
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
       NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000',
-      POSTGRESQL_HOST: 'bolt-n-nuts-products.c6dtehq3bdda.eu-west-1.rds.amazonaws.com',
-      POSTGRESQL_PORT: '5432',
-      POSTGRESQL_USER: 'postgres',
-      POSTGRESQL_DB_NAME: 'bolt_n_nuts',
-      POSTGRESQL_PASSWORD: 'JnJ4UcTXYezH14MIF9i1',
+      POSTGRESQL_HOST: process.env.POSTGRESQL_HOST,
+      POSTGRESQL_PORT: process.env.POSTGRESQL_PORT,
+      POSTGRESQL_USER: process.env.POSTGRESQL_USER,
+      POSTGRESQL_DB_NAME: process.env.POSTGRESQL_DB_NAME,
+      POSTGRESQL_PASSWORD: process.env.POSTGRESQL_PASSWORD,
     },
   },
   // import the function via paths
-  functions: { productList, productById },
+  functions: { productList, productById, productAdd },
   package: { individually: true },
   custom: {
     esbuild: {

@@ -3,3 +3,4 @@
 /**/.serverless/
 /**/build/
 /**/dist/
+/product-service/.env
