@@ -1,10 +1,11 @@
 import type { AWS } from '@serverless/typescript';
 import importProductsFile from '@functions/import-products-file';
+import importFileParser from '@functions/import-file-parser';
 
 const serverlessConfiguration: AWS = {
   service: 'import-service',
   frameworkVersion: '3',
-  plugins: ['serverless-esbuild'],
+  plugins: [ 'serverless-esbuild' ],
   provider: {
     name: 'aws',
     runtime: 'nodejs16.x',
@@ -22,14 +23,15 @@ const serverlessConfiguration: AWS = {
         Effect: 'Allow',
         Action: 's3:*',
         Resource: [
-          'arn:aws:s3:::bolt-n-nuts-import/*'
-        ]
-      }
+          'arn:aws:s3:::bolt-n-nuts-import/*',
+        ],
+      },
     ],
   },
   // import the function via paths
   functions: {
     importProductsFile,
+    importFileParser,
   },
   package: { individually: true },
   custom: {
@@ -37,7 +39,7 @@ const serverlessConfiguration: AWS = {
       bundle: true,
       minify: false,
       sourcemap: true,
-      exclude: ['aws-sdk'],
+      exclude: [ 'aws-sdk' ],
       target: 'node16',
       define: { 'require.resolve': undefined },
       platform: 'node',
