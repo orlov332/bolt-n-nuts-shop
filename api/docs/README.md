@@ -3,11 +3,12 @@
 <a name="documentation-for-api-endpoints"></a>
 ## Documentation for API Endpoints
 
-All URIs are relative to *http://https*
+All URIs are relative to *https://xmy3ijbcpj.execute-api.eu-west-1.amazonaws.com/dev*
 
 | Class | Method | HTTP request | Description |
 |------------ | ------------- | ------------- | -------------|
-| *ProductsApi* | [**getProductById**](Apis/ProductsApi.md#getproductbyid) | **GET** /products/{productId} | Get product by Id |
+| *ProductsApi* | [**addProduct**](Apis/ProductsApi.md#addproduct) | **POST** /products | Create new product |
+*ProductsApi* | [**getProductById**](Apis/ProductsApi.md#getproductbyid) | **GET** /products/{productId} | Get product by Id |
 *ProductsApi* | [**getProductsList**](Apis/ProductsApi.md#getproductslist) | **GET** /products | Get all product list |
 
 

@@ -1,12 +1,40 @@
 # ProductsApi
 
-All URIs are relative to *http://https*
+All URIs are relative to *https://xmy3ijbcpj.execute-api.eu-west-1.amazonaws.com/dev*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
+| [**addProduct**](ProductsApi.md#addProduct) | **POST** /products | Create new product |
 | [**getProductById**](ProductsApi.md#getProductById) | **GET** /products/{productId} | Get product by Id |
 | [**getProductsList**](ProductsApi.md#getProductsList) | **GET** /products | Get all product list |
 
+
+<a name="addProduct"></a>
+# **addProduct**
+> List addProduct(Product)
+
+Create new product
+
+    Create new product
+
+### Parameters
+
+|Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **Product** | [**List**](../Models/Product.md)|  | |
+
+### Return type
+
+[**List**](../Models/Product.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
 
 <a name="getProductById"></a>
 # **getProductById**
