@@ -4,12 +4,16 @@
   "description": "Serverless aws-nodejs-typescript template",
   "main": "serverless.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc",
+    "test": "jest",
+    "deploy": "sls deploy"
   },
   "engines": {
     "node": ">=14.15.0"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.121.0",
+    "@aws-sdk/s3-request-presigner": "^3.121.0",
     "@middy/core": "^3.1.0",
     "@middy/error-logger": "^3.1.0",
     "@middy/http-cors": "^3.1.0",
