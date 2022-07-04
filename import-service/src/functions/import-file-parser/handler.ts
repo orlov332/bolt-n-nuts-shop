@@ -1,4 +1,4 @@
-import { GetObjectCommand, GetObjectCommandInput } from '@aws-sdk/client-s3';
+import { CopyObjectCommand, DeleteObjectCommand, GetObjectCommand } from '@aws-sdk/client-s3';
 import { S3Handler } from 'aws-lambda';
 import { s3Client } from '@libs/s3-client';
 import middy from '@middy/core';
@@ -9,19 +9,31 @@ import csvParser from 'csv-parser';
 const importFileParser: S3Handler = async (event) => {
 
   for (const record of event.Records) {
-    const bucketParams: GetObjectCommandInput = {
-      Bucket: record.s3.bucket.name,
-      Key: record.s3.object.key,
-      ResponseContentType: 'text/csv',
-      ResponseContentEncoding: 'utf-8',
+    const bucketName = record.s3.bucket.name;
+    const fileName = record.s3.object.key;
 
-    };
-    const data = await s3Client.send(new GetObjectCommand(bucketParams));
+    const data = await s3Client.send(
+      new GetObjectCommand({
+        Bucket: bucketName,
+        Key: fileName,
+      }));
 
     data.Body
       .pipe(csvParser())
       .on('data', (data) => console.log(data));
+
+    // Move file to parsed
+    await s3Client.send(new CopyObjectCommand({
+      CopySource: `${ bucketName }/${ fileName }`,
+      Bucket: bucketName,
+      Key: fileName.replace('uploaded/', 'parsed/'),
+    }));
+    await s3Client.send(new DeleteObjectCommand({
+      Bucket: bucketName,
+      Key: fileName,
+    }));
   }
+
 };
 
 export const main = middy(importFileParser)
