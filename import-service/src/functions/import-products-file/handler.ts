@@ -4,7 +4,7 @@ import { PutObjectCommand, PutObjectCommandInput } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { s3Client } from '@libs/s3-client';
 
-const importProductsFile: ValidatedEventAPIGatewayProxyEvent<any> = async (event) => {
+export const importProductsFile: ValidatedEventAPIGatewayProxyEvent<any> = async (event) => {
   const fileName = event.queryStringParameters.name;
   console.log('Requested name:', fileName)
 
