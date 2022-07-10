@@ -25,9 +25,30 @@ const catalogBatchProcess: SQSHandler = async (event) => {
       await snsClient.send(
         new PublishCommand({
           TopicArn: SNS_IMPORT_TOPIC,
-          Message: `Product with title "${product.title}" (id: ${product.id}) imported`,
+          Subject: `AWS Product import id: ${ product.id }`,
+          Message: `Product with title "${ product.title }" (id: ${ product.id }) imported`,
+          MessageAttributes: {
+            errorMail: {
+              DataType: 'String',
+              StringValue: 'false',
+            },
+          },
         }));
     }
+  } catch (e) {
+    await snsClient.send(
+      new PublishCommand({
+        TopicArn: SNS_IMPORT_TOPIC,
+        Subject: `AWS Product import error: ${e.message}`,
+        Message: `Product import error on message: ${JSON.stringify(event.Records)}`,
+        MessageAttributes: {
+          errorMail: {
+            DataType: 'String',
+            StringValue: 'true',
+          },
+        },
+      }));
+    throw e;
   } finally {
     client && await client.end();
   }

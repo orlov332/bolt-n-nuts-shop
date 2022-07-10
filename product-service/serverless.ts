@@ -65,6 +65,20 @@ const serverlessConfiguration: AWS = {
           Protocol: 'email',
           Endpoint: 'orlov332@gmail.com',
           TopicArn: { Ref: 'createProductTopic' },
+          FilterPolicy: {
+            "errorMail": ["false"]
+          }
+        },
+      },
+      createProductSubscriptionErrors: {
+        Type: 'AWS::SNS::Subscription',
+        Properties: {
+          Protocol: 'email',
+          Endpoint: 'boltnuts69@gmail.com',
+          TopicArn: { Ref: 'createProductTopic' },
+          FilterPolicy: {
+            "errorMail": ["true"]
+          }
         },
       },
     },
