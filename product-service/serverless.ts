@@ -26,13 +26,21 @@ const serverlessConfiguration: AWS = {
       POSTGRESQL_DB_NAME: process.env.POSTGRESQL_DB_NAME,
       POSTGRESQL_PASSWORD: process.env.POSTGRESQL_PASSWORD,
       SQS_NEW_PRODUCT: { Ref: 'catalogItemsQueue' },
+      SNS_IMPORT_TOPIC: { Ref: 'createProductTopic' },
     },
     iamRoleStatements: [
       {
         Effect: 'Allow',
         Action: 'sqs:*',
         Resource: [
-          { 'Fn::GetAtt': ['catalogItemsQueue', 'Arn'] }
+          { 'Fn::GetAtt': [ 'catalogItemsQueue', 'Arn' ] },
+        ],
+      },
+      {
+        Effect: 'Allow',
+        Action: 'sns:*',
+        Resource: [
+          { Ref: 'createProductTopic' },
         ],
       },
     ],
@@ -43,6 +51,20 @@ const serverlessConfiguration: AWS = {
         Type: 'AWS::SQS::Queue',
         Properties: {
           QueueName: 'product-catalog-items-queue',
+        },
+      },
+      createProductTopic: {
+        Type: 'AWS::SNS::Topic',
+        Properties: {
+          TopicName: 'product-catalog-import-topic',
+        },
+      },
+      createProductSubscription: {
+        Type: 'AWS::SNS::Subscription',
+        Properties: {
+          Protocol: 'email',
+          Endpoint: 'orlov332@gmail.com',
+          TopicArn: { Ref: 'createProductTopic' },
         },
       },
     },

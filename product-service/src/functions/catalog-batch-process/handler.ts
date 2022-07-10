@@ -4,6 +4,10 @@ import { ProductRepository } from '../../repository/ProductRepository';
 import middy from '@middy/core';
 import errorLogger from '@middy/error-logger';
 import inputOutputLogger from '@middy/input-output-logger';
+import { snsClient } from '@libs/sns-client';
+import { PublishCommand } from '@aws-sdk/client-sns';
+
+const { SNS_IMPORT_TOPIC } = process.env;
 
 const catalogBatchProcess: SQSHandler = async (event) => {
   let client;
@@ -13,9 +17,16 @@ const catalogBatchProcess: SQSHandler = async (event) => {
     const productRepository = new ProductRepository(client);
 
     for (const record of event.Records) {
-      console.log('Received message: ', record)
+      console.log('Received message: ', record);
       const newProduct = JSON.parse(record.body);
-      await productRepository.addNew(newProduct);
+      const product = await productRepository.addNew(newProduct);
+
+      // Send Notification
+      await snsClient.send(
+        new PublishCommand({
+          TopicArn: SNS_IMPORT_TOPIC,
+          Message: `Product with title "${product.title}" (id: ${product.id}) imported`,
+        }));
     }
   } finally {
     client && await client.end();
