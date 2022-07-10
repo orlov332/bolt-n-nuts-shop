@@ -1,4 +1,4 @@
-import { SNSClient } from "@aws-sdk/client-sns";
+import { SNSClient } from '@aws-sdk/client-sns';
 
 const REGION = process.env.AWS_REGION || 'eu-west-1';
 

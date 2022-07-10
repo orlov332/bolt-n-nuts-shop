@@ -19,13 +19,15 @@ export class ProductRepository {
   ) {
   }
 
-  getAll = async () =>
-    this.client.query(ALL_PRODUCTS_QUERY)
+  async getAll() {
+    return this.client.query(ALL_PRODUCTS_QUERY)
       .then(res => res.rows);
+  }
 
-  getById = async (id: string) =>
-    this.client.query(PRODUCT_BY_ID_QUERY, [ id ])
+  async getById(id: string) {
+    return this.client.query(PRODUCT_BY_ID_QUERY, [ id ])
       .then(res => res.rows[0]);
+  }
 
   async addNew({
                  id = uuid.v4(),
