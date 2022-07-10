@@ -13,6 +13,7 @@ const catalogBatchProcess: SQSHandler = async (event) => {
     const productRepository = new ProductRepository(client);
 
     for (const record of event.Records) {
+      console.log('Received message: ', record)
       const newProduct = JSON.parse(record.body);
       await productRepository.addNew(newProduct);
     }

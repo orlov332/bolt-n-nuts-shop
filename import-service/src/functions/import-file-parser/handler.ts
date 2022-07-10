@@ -5,6 +5,10 @@ import middy from '@middy/core';
 import inputOutputLogger from '@middy/input-output-logger';
 import errorLogger from '@middy/error-logger';
 import csvParser from 'csv-parser';
+import { sqsClient } from '@libs/sqs-client';
+import { SendMessageCommand } from '@aws-sdk/client-sqs';
+
+const { SQS_NEW_PRODUCT } = process.env;
 
 const importFileParser: S3Handler = async (event) => {
 
@@ -20,7 +24,17 @@ const importFileParser: S3Handler = async (event) => {
 
     data.Body
       .pipe(csvParser())
-      .on('data', (data) => console.log(data));
+      .on('data', async (data) => {
+        console.log('Send product to SQS', data);
+        await sqsClient.send(
+          new SendMessageCommand({
+            QueueUrl: SQS_NEW_PRODUCT,
+            MessageBody: JSON.stringify(data),
+          }));
+      })
+      .on('end', () => {
+        console.log('No more data.');
+      });
 
     // Move file to parsed
     await s3Client.send(new CopyObjectCommand({
