@@ -25,24 +25,34 @@ const serverlessConfiguration: AWS = {
       POSTGRESQL_USER: process.env.POSTGRESQL_USER,
       POSTGRESQL_DB_NAME: process.env.POSTGRESQL_DB_NAME,
       POSTGRESQL_PASSWORD: process.env.POSTGRESQL_PASSWORD,
+      SQS_NEW_PRODUCT: { Ref: 'catalogItemsQueue' },
     },
+    iamRoleStatements: [
+      {
+        Effect: 'Allow',
+        Action: 'sqs:*',
+        Resource: [
+          { 'Fn::GetAtt': ['catalogItemsQueue', 'Arn'] }
+        ],
+      },
+    ],
   },
   resources: {
     Resources: {
       catalogItemsQueue: {
         Type: 'AWS::SQS::Queue',
         Properties: {
-          QueueName: 'product-catalog-items-queue'
-        }
-      }
-    }
+          QueueName: 'product-catalog-items-queue',
+        },
+      },
+    },
   },
   // import the function via paths
   functions: {
     productList,
     productById,
     productAdd,
-    catalogBatchProcess
+    catalogBatchProcess,
   },
   package: { individually: true },
   custom: {
