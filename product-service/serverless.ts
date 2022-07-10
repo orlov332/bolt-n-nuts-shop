@@ -3,6 +3,7 @@ import 'dotenv/config';
 import productList from '@functions/product-list';
 import productById from '@functions/prodict-by-id';
 import productAdd from '@functions/product-add';
+import catalogBatchProcess from '@functions/catalog-batch-process';
 
 const serverlessConfiguration: AWS = {
   service: 'product-service',
@@ -26,8 +27,23 @@ const serverlessConfiguration: AWS = {
       POSTGRESQL_PASSWORD: process.env.POSTGRESQL_PASSWORD,
     },
   },
+  resources: {
+    Resources: {
+      catalogItemsQueue: {
+        Type: 'AWS::SQS::Queue',
+        Properties: {
+          QueueName: 'product-catalog-items-queue'
+        }
+      }
+    }
+  },
   // import the function via paths
-  functions: { productList, productById, productAdd },
+  functions: {
+    productList,
+    productById,
+    productAdd,
+    catalogBatchProcess
+  },
   package: { individually: true },
   custom: {
     esbuild: {
