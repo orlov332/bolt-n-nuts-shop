@@ -1,7 +1,8 @@
 import schema from './schema';
 import { handlerPath } from '@libs/handler-resolver';
+import { AWSFunction } from '@libs/aws-function';
 
-export default {
+const awsFunction: AWSFunction = {
   handler: `${handlerPath(__dirname)}/handler.main`,
   events: [
     {
@@ -17,3 +18,5 @@ export default {
     },
   ],
 };
+
+export default awsFunction;

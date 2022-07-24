@@ -5,17 +5,9 @@ const awsFunction: AWSFunction = {
   handler: `${handlerPath(__dirname)}/handler.main`,
   events: [
     {
-      http: {
-        method: 'get',
-        path: 'import',
-        cors: true,
-        request: {
-          parameters: {
-            querystrings: {
-              name:  true,
-            }
-          }
-        }
+      sqs: {
+        batchSize: 5,
+        arn: { 'Fn::GetAtt': ['catalogItemsQueue', 'Arn'] },
       },
     },
   ],

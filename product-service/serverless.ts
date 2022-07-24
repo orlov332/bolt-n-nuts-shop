@@ -3,6 +3,7 @@ import 'dotenv/config';
 import productList from '@functions/product-list';
 import productById from '@functions/prodict-by-id';
 import productAdd from '@functions/product-add';
+import catalogBatchProcess from '@functions/catalog-batch-process';
 
 const serverlessConfiguration: AWS = {
   service: 'product-service',
@@ -24,10 +25,71 @@ const serverlessConfiguration: AWS = {
       POSTGRESQL_USER: process.env.POSTGRESQL_USER,
       POSTGRESQL_DB_NAME: process.env.POSTGRESQL_DB_NAME,
       POSTGRESQL_PASSWORD: process.env.POSTGRESQL_PASSWORD,
+      SQS_NEW_PRODUCT: { Ref: 'catalogItemsQueue' },
+      SNS_IMPORT_TOPIC: { Ref: 'createProductTopic' },
+    },
+    iamRoleStatements: [
+      {
+        Effect: 'Allow',
+        Action: 'sqs:*',
+        Resource: [
+          { 'Fn::GetAtt': [ 'catalogItemsQueue', 'Arn' ] },
+        ],
+      },
+      {
+        Effect: 'Allow',
+        Action: 'sns:*',
+        Resource: [
+          { Ref: 'createProductTopic' },
+        ],
+      },
+    ],
+  },
+  resources: {
+    Resources: {
+      catalogItemsQueue: {
+        Type: 'AWS::SQS::Queue',
+        Properties: {
+          QueueName: 'product-catalog-items-queue',
+        },
+      },
+      createProductTopic: {
+        Type: 'AWS::SNS::Topic',
+        Properties: {
+          TopicName: 'product-catalog-import-topic',
+        },
+      },
+      createProductSubscription: {
+        Type: 'AWS::SNS::Subscription',
+        Properties: {
+          Protocol: 'email',
+          Endpoint: 'orlov332@gmail.com',
+          TopicArn: { Ref: 'createProductTopic' },
+          FilterPolicy: {
+            "errorMail": ["false"]
+          }
+        },
+      },
+      createProductSubscriptionErrors: {
+        Type: 'AWS::SNS::Subscription',
+        Properties: {
+          Protocol: 'email',
+          Endpoint: 'boltnuts69@gmail.com',
+          TopicArn: { Ref: 'createProductTopic' },
+          FilterPolicy: {
+            "errorMail": ["true"]
+          }
+        },
+      },
     },
   },
   // import the function via paths
-  functions: { productList, productById, productAdd },
+  functions: {
+    productList,
+    productById,
+    productAdd,
+    catalogBatchProcess,
+  },
   package: { individually: true },
   custom: {
     esbuild: {
