@@ -1,4 +1,7 @@
-# Serverless - AWS Node.js Typescript
+# Authorization Service
+
+Authorization endpoint: 
+https://cyrzkdgd46.execute-api.eu-west-1.amazonaws.com/dev/token
 
 This project has been generated using the `aws-nodejs-typescript` template from the [Serverless framework](https://www.serverless.com/).
 

@@ -8,7 +8,7 @@ const awsFunction: AWSFunction = {
     {
       http: {
         method: 'post',
-        path: 'hello',
+        path: 'basic-authorizer',
         request: {
           schemas: {
             'application/json': schema,
