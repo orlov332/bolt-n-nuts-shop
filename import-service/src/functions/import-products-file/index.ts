@@ -2,7 +2,7 @@ import { handlerPath } from '@libs/handler-resolver';
 import { AWSFunction } from '@libs/aws-function';
 
 const awsFunction: AWSFunction = {
-  handler: `${handlerPath(__dirname)}/handler.main`,
+  handler: `${ handlerPath(__dirname) }/handler.main`,
   events: [
     {
       http: {
@@ -12,10 +12,17 @@ const awsFunction: AWSFunction = {
         request: {
           parameters: {
             querystrings: {
-              name:  true,
-            }
-          }
-        }
+              name: true,
+            },
+          },
+        },
+        authorizer: {
+          name: 'basicTokenAuthorizer',
+          arn: 'arn:aws:lambda:eu-west-1:145504082988:function:authorization-service-dev-basicAuthorizer',
+          resultTtlInSeconds: 0,
+          identitySource: 'method.request.header.Authorization',
+          type: 'token',
+        },
       },
     },
   ],
