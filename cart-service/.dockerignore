@@ -12,6 +12,7 @@ dist
 .eslintrc.js
 .prettierrc
 nest-cli.json
+.elasticbeanstalk
 
 # Readme
 README.md
