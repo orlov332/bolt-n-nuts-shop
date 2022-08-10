@@ -1,0 +1,18 @@
+# Dependencied
+node_modules
+
+# Test files
+test
+
+# Compiled files
+dist
+
+# Some config files
+.gitignore
+.eslintrc.js
+.prettierrc
+nest-cli.json
+.elasticbeanstalk
+
+# Readme
+README.md
