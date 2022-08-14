@@ -39,8 +39,8 @@ export class AppService {
 
   private proxyCall(method: string, url: string, body: any, headers: any) {
     this.logger.log(`Incoming request: ${method} ${url}`);
-    this.logger.log(`Body: ${JSON.stringify(body)}`);
-    this.logger.log(`Headers: ${JSON.stringify(headers)}`);
+    this.logger.log(`Body: ${util.inspect(body)}`);
+    this.logger.log(`Headers: ${util.inspect(headers)}`);
 
     const target = url.split(/[\/?]/)[1];
     const targetUrl = process.env[`TARGET_URL.${target.toUpperCase()}`];
@@ -60,7 +60,9 @@ export class AppService {
         catchError((error) => {
           if (error.response) {
             this.logger.log(
-              `Error from target call: ${util.inspect(error.response)}`,
+              `Error from target call: ${util.inspect(
+                error.response.data.message,
+              )}`,
             );
             return throwError(
               () =>
