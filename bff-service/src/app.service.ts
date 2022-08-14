@@ -52,7 +52,7 @@ export class AppService {
         method,
         baseURL: targetUrl,
         url,
-        data: body,
+        data: Object.keys(body).length === 0 ? undefined : body,
         headers: { authorization: headers.authorization || '' },
       })
       .pipe(
