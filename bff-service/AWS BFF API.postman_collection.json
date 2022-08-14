@@ -1,0 +1,189 @@
+{
+	"info": {
+		"_postman_id": "d20bd606-0c2b-436d-b575-c30ba4f53c3a",
+		"name": "AWS Products API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "6362287"
+	},
+	"item": [
+		{
+			"name": "Products List",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{API_ROOT}}/products",
+					"host": [
+						"{{API_ROOT}}"
+					],
+					"path": [
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Product By Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{API_ROOT}}/products/7567ec4b-b10c-48c5-9445-fc73c48a80a2",
+					"host": [
+						"{{API_ROOT}}"
+					],
+					"path": [
+						"products",
+						"7567ec4b-b10c-48c5-9445-fc73c48a80a2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Products Add",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"Forged eye & eye\",\n    \"description\": \"Eye end fittings are used with connecting components that can be opened and attached to the eye.\",\n    \"price\": 10,\n    \"count\": 100\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{API_ROOT}}/products",
+					"host": [
+						"{{API_ROOT}}"
+					],
+					"path": [
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get import link",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "AbsolutelySecret00394",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "orlov332",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{IMPORT_ROOT}}/import?name=qwerty.csv",
+					"host": [
+						"{{IMPORT_ROOT}}"
+					],
+					"path": [
+						"import"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "qwerty.csv"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Cart",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{CART_ROOT}}/cart",
+					"host": [
+						"{{CART_ROOT}}"
+					],
+					"path": [
+						"cart"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Put Cart",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"items\": [\n        {\n            \"product\": {\n                \"id\": \"dccb99eb-e7cd-4e17-a22d-04daf0141710\",\n                \"title\": \"Forged eye & eye\",\n                \"description\": \"Eye end fittings are used with connecting components that can be opened and attached to the eye.\",\n                \"price\": 10,\n                \"count\": 100\n            },\n            \"count\": 4\n        },\n        {\n            \"product\": {\n                \"id\": \"2fca3c58-a749-47b2-9481-d3ddc4bed6c0\",\n                \"title\": \"Forged eye & eye\",\n                \"description\": \"Eye end fittings are used with connecting components that can be opened and attached to the eye.\",\n                \"price\": 10,\n                \"count\": 100\n            },\n            \"count\": 1\n        },\n        {\n            \"product\": {\n                \"id\": \"2abe123e-15dd-479b-8582-b1e224d5425d\",\n                \"title\": \"Forged eye & eye\",\n                \"description\": \"Eye end fittings are used with connecting components that can be opened and attached to the eye.\",\n                \"price\": 10,\n                \"count\": 100\n            },\n            \"count\": 1\n        },\n        {\n            \"product\": {\n                \"id\": \"7567ec4b-b10c-48c5-9345-fc73c48a80a6\",\n                \"title\": \"Double loop hitch pin clips\",\n                \"description\": \"Double loop hitch pin clips are R-shaped clips with a coil to provide additional durability in clevis pin or hitch pin systems. Also known as bridge pins.\",\n                \"price\": 72,\n                \"count\": 23\n            },\n            \"count\": 1\n        },\n        {\n            \"product\": {\n                \"id\": \"7a6b78e9-932a-448b-a86e-19f747db74e7\",\n                \"title\": \"Tsets rastsislau\",\n                \"description\": \"Intended for use in temporary lifting jobs. Has a screw pin for quick installation and removal.\",\n                \"price\": 11,\n                \"count\": 87\n            },\n            \"count\": 1\n        },\n        {\n            \"product\": {\n                \"id\": \"f4c67529-9e2e-4b1a-8d24-e985338a9b71\",\n                \"title\": \"Forged eye & eye\",\n                \"description\": \"Eye end fittings are used with connecting components that can be opened and attached to the eye.\",\n                \"price\": 10,\n                \"count\": 100\n            },\n            \"count\": 2\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{CART_ROOT}}/cart",
+					"host": [
+						"{{CART_ROOT}}"
+					],
+					"path": [
+						"cart"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "API_ROOT",
+			"value": "https://xmy3ijbcpj.execute-api.eu-west-1.amazonaws.com/dev",
+			"type": "string"
+		},
+		{
+			"key": "IMPORT_ROOT",
+			"value": "https://c7onz6qre8.execute-api.eu-west-1.amazonaws.com/dev",
+			"type": "string"
+		},
+		{
+			"key": "CART_ROOT",
+			"value": "http://bolt-n-nuts-cart-api-develop.eu-west-1.elasticbeanstalk.com/api/profile",
+			"type": "string"
+		}
+	]
+}
