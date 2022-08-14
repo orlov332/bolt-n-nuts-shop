@@ -1,6 +1,12 @@
-import { Injectable, Logger, NotFoundException } from '@nestjs/common';
+import {
+  BadGatewayException,
+  HttpException,
+  Injectable,
+  Logger,
+} from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
-import { map } from 'rxjs';
+import { catchError, map, throwError } from 'rxjs';
+import * as util from 'util';
 
 @Injectable()
 export class AppService {
@@ -16,7 +22,7 @@ export class AppService {
     const target = url.split(/[\/?]/)[1];
     const targetUrl = process.env[`TARGET_URL.${target.toUpperCase()}`];
     this.logger.log(`Redirecting call to: ${targetUrl}${url}`);
-    if (!targetUrl) throw new NotFoundException();
+    if (!targetUrl) throw new BadGatewayException('Cannot process request');
 
     return this.httpService
       .request({
@@ -26,6 +32,24 @@ export class AppService {
         data: body,
         headers: { authorization: headers.authorization || '' },
       })
-      .pipe(map((res) => res.data));
+      .pipe(
+        map((res) => res.data),
+        catchError((error) => {
+          if (error.response) {
+            this.logger.log(
+              `Error from target call: ${util.inspect(error.response)}`,
+            );
+            return throwError(
+              () =>
+                new HttpException(
+                  error.response.data.message,
+                  error.response.status,
+                ),
+            );
+          }
+          this.logger.error(`Unknown axios error: ${util.inspect(error)}`);
+          return throwError(() => error);
+        }),
+      );
   }
 }
