@@ -34,6 +34,8 @@ $ npm install
 
 ## Running the app
 
+Rename .env.example to .env and change variables.
+
 ```bash
 # development
 $ npm run start
