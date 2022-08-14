@@ -8,7 +8,7 @@ export class AppController {
 
   @All('*')
   proxyCall(@Req() request: Request) {
-    return this.appService.proxyCall(
+    return this.appService.proxyCallCached(
       request.method,
       request.originalUrl,
       request.body,

@@ -1,20 +1,43 @@
 import {
   BadGatewayException,
+  CACHE_MANAGER,
   HttpException,
+  Inject,
   Injectable,
   Logger,
 } from '@nestjs/common';
+import { Cache } from 'cache-manager';
 import { HttpService } from '@nestjs/axios';
-import { catchError, map, throwError } from 'rxjs';
+import { catchError, map, of, tap, throwError } from 'rxjs';
 import * as util from 'util';
+
+const PRODUCT_LIST_CACHE_NAME = 'product_list_cache';
 
 @Injectable()
 export class AppService {
   private readonly logger = new Logger(AppService.name);
 
-  constructor(private readonly httpService: HttpService) {}
+  constructor(
+    private readonly httpService: HttpService,
+    @Inject(CACHE_MANAGER) private cacheManager: Cache,
+  ) {}
 
-  proxyCall(method: string, url: string, body: any, headers: any) {
+  async proxyCallCached(method: string, url: string, body: any, headers: any) {
+    if (method.toLowerCase() === 'get' && url === '/products') {
+      const productList = await this.cacheManager.get(PRODUCT_LIST_CACHE_NAME);
+      if (!productList) {
+        return this.proxyCall(method, url, body, headers).pipe(
+          tap((products) =>
+            this.cacheManager.set(PRODUCT_LIST_CACHE_NAME, products),
+          ),
+        );
+      }
+      this.logger.log(`Retrieving product list from cache`);
+      return of(productList);
+    } else return this.proxyCall(method, url, body, headers);
+  }
+
+  private proxyCall(method: string, url: string, body: any, headers: any) {
     this.logger.log(`Incoming request: ${method} ${url}`);
     this.logger.log(`Body: ${JSON.stringify(body)}`);
     this.logger.log(`Headers: ${JSON.stringify(headers)}`);
